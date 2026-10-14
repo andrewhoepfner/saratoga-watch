@@ -2,8 +2,10 @@ name: 17 Saratoga complaint watch
 
 on:
   schedule:
-    # Times are UTC: 11:47 and 23:47 UTC = 7:47am and 7:47pm New York (6:47 in winter)
-    - cron: "47 11,23 * * *"
+    # Times are UTC. One line for summer, one for winter; watch.py skips
+    # whichever doesn't match, so checks land at 9:30am and 9:30pm New York.
+    - cron: "30 1,13 * * *"
+    - cron: "30 2,14 * * *"
   workflow_dispatch: # adds a "Run workflow" button for manual checks
 
 permissions:
@@ -23,6 +25,7 @@ jobs:
       - name: Check city records
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          CRON_SCHEDULE: ${{ github.event.schedule }}
         run: python3 watch.py
 
       - name: Remember what was seen
