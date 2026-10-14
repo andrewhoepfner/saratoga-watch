@@ -1,1 +1,237 @@
+#!/usr/bin/env python3
+"""
+17 Saratoga Ave complaint watcher.
 
+Checks three places for complaints about 17 Saratoga Ave, Brooklyn (BIN 3039904):
+  1. NYC 311 service requests (open data)
+  2. DOB Complaints Received (open data)
+  3. The DOB BIS complaints page (backup, since the open data can lag)
+
+Compares against what it saw last time (state.json) and sends a phone
+notification through ntfy when something is new or has changed.
+"""
+
+import hashlib
+import json
+import os
+import re
+import urllib.parse
+import urllib.request
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+BIN = "3039904"
+STATE_FILE = "state.json"
+NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "").strip()
+DRY_RUN = os.environ.get("DRY_RUN") == "1"  # print instead of notifying
+BIS_URL = ("https://a810-bisweb.nyc.gov/bisweb/ComplaintsByAddressServlet"
+           f"?requestid=1&allbin={BIN}")
+FAILURE_ALERT_AFTER = 4  # consecutive failed checks (= 2 days) before warning
+HEADERS = {"User-Agent": "Mozilla/5.0 (17-saratoga-watch; personal monitoring)"}
+NY = ZoneInfo("America/New_York")
+
+
+# ---------- fetching ----------
+
+def get(url, timeout=60):
+    req = urllib.request.Request(url, headers=HEADERS)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read().decode("utf-8", errors="replace")
+
+
+def socrata(dataset, params):
+    url = (f"https://data.cityofnewyork.us/resource/{dataset}.json?"
+           + urllib.parse.urlencode(params))
+    return json.loads(get(url))
+
+
+def fetch_311():
+    rows = socrata("erm2-nwe9", {
+        "$where": ("upper(incident_address) like '17 SARATOGA%' "
+                   "AND incident_zip='11233' "
+                   "AND created_date > '2025-01-01T00:00:00'"),
+        "$select": ("unique_key,created_date,complaint_type,descriptor,"
+                    "agency,status,resolution_description,closed_date"),
+        "$order": "created_date DESC",
+        "$limit": 500,
+    })
+    items = {}
+    for r in rows:
+        key = r.get("unique_key")
+        if not key:
+            continue
+        items[key] = {
+            "label": f"311 #{key}",
+            "date": r.get("created_date", "")[:16].replace("T", " "),
+            "what": " / ".join(x for x in (r.get("complaint_type"),
+                                           r.get("descriptor"),
+                                           r.get("agency")) if x),
+            "status": r.get("status", ""),
+            "detail": r.get("resolution_description", ""),
+        }
+    return items
+
+
+def fetch_dob_records():
+    rows = socrata("eabe-havv", {"bin": BIN, "$limit": 500})
+    items = {}
+    for r in rows:
+        key = r.get("complaint_number")
+        if not key:
+            continue
+        bits = []
+        if r.get("disposition_code"):
+            bits.append(f"disposition {r['disposition_code']}")
+        if r.get("disposition_date"):
+            bits.append(f"on {r['disposition_date']}")
+        if r.get("inspection_date"):
+            bits.append(f"inspected {r['inspection_date']}")
+        items[key] = {
+            "label": f"DOB #{key}",
+            "date": r.get("date_entered", ""),
+            "what": f"category {r.get('complaint_category', '?')}",
+            "status": r.get("status", ""),
+            "detail": ", ".join(bits),
+        }
+    return items
+
+
+def fetch_dob_page():
+    html = get(BIS_URL)
+    text = re.sub(r"<[^>]+>", " ", html).replace("&nbsp;", " ")
+    if "omplaint" not in text:
+        raise RuntimeError("page did not look like the DOB complaints list")
+    # Brooklyn DOB complaint numbers are 7 digits starting with 3.
+    numbers = set(re.findall(r"\b3\d{6}\b", text)) - {BIN}
+    return {n: {"label": f"DOB #{n}", "date": "",
+                "what": "newly listed on the DOB BIS complaints page",
+                "status": "", "detail": ""} for n in numbers}
+
+
+SOURCES = [
+    ("311", fetch_311),
+    ("DOB records", fetch_dob_records),
+    ("DOB page", fetch_dob_page),
+]
+
+
+# ---------- comparing ----------
+
+def fingerprint(item):
+    raw = json.dumps([item["status"], item["detail"]])
+    return hashlib.sha1(raw.encode()).hexdigest()[:12]
+
+
+def describe(item):
+    parts = [item["label"]]
+    if item["date"]:
+        parts[0] += f" ({item['date']})"
+    parts.append(item["what"])
+    if item["status"]:
+        parts.append(f"Status: {item['status']}")
+    if item["detail"]:
+        parts.append(item["detail"][:300])
+    return " - ".join(parts)
+
+
+def load_state():
+    try:
+        with open(STATE_FILE) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+
+
+def save_state(state):
+    with open(STATE_FILE, "w") as f:
+        json.dump(state, f, indent=1, sort_keys=True)
+
+
+# ---------- notifying ----------
+
+def notify(title, body, priority="default", tags="house"):
+    if DRY_RUN or not NTFY_TOPIC:
+        print(f"\n[notification] {title}\n{body}\n")
+        if not NTFY_TOPIC and not DRY_RUN:
+            print("NTFY_TOPIC is not set, so nothing was sent to your phone.")
+        return
+    req = urllib.request.Request(
+        f"https://ntfy.sh/{NTFY_TOPIC}",
+        data=body.encode("utf-8"),
+        headers={"Title": title, "Priority": priority, "Tags": tags,
+                 "Click": BIS_URL},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=30) as r:
+        r.read()
+
+
+# ---------- main ----------
+
+def main():
+    state = load_state()
+    state.setdefault("sources", {})
+    state.setdefault("failures", {})
+    now_ny = datetime.now(timezone.utc).astimezone(NY)
+
+    changes, problems, baseline = [], [], []
+
+    for name, fetch in SOURCES:
+        try:
+            items = fetch()
+        except Exception as e:  # network trouble, site down, etc.
+            n = state["failures"].get(name, 0) + 1
+            state["failures"][name] = n
+            print(f"{name}: check failed ({n} in a row): {e}")
+            if n == FAILURE_ALERT_AFTER:
+                problems.append(f"Couldn't reach {name} for the last {n} "
+                                "checks. Worth a manual look.")
+            continue
+
+        if state["failures"].get(name, 0) >= FAILURE_ALERT_AFTER:
+            problems.append(f"{name} is reachable again.")
+        state["failures"][name] = 0
+
+        seen = state["sources"].get(name)
+        if seen is None:  # first time checking this source: just record it
+            state["sources"][name] = {k: fingerprint(v) for k, v in items.items()}
+            baseline.append(f"{name}: {len(items)} complaint(s) on record")
+            continue
+
+        for key, item in sorted(items.items(), key=lambda kv: kv[1]["date"],
+                                reverse=True):
+            fp = fingerprint(item)
+            if key not in seen:
+                changes.append("NEW: " + describe(item))
+            elif seen[key] != fp:
+                changes.append("UPDATED: " + describe(item))
+            seen[key] = fp
+        print(f"{name}: {len(items)} on record, checked OK")
+
+    if changes:
+        notify(f"17 Saratoga: {len(changes)} new or changed complaint record(s)",
+               "\n\n".join(changes), priority="high", tags="rotating_light")
+    if problems:
+        notify("17 Saratoga watcher: connection note", "\n".join(problems),
+               tags="warning")
+    if baseline:
+        notify("17 Saratoga watcher is running",
+               "Starting point recorded. You'll hear from me when anything "
+               "new appears.\n\n" + "\n".join(baseline), tags="white_check_mark")
+
+    # Weekly reassurance on Monday mornings, so silence never means "broken".
+    today = now_ny.date().isoformat()
+    if (now_ny.weekday() == 0 and now_ny.hour < 12 and not changes
+            and not baseline and state.get("last_heartbeat") != today):
+        notify("17 Saratoga: all quiet",
+               "Still checking every 12 hours. Nothing new since last week's "
+               "note unless I told you otherwise.", priority="low",
+               tags="zzz")
+        state["last_heartbeat"] = today
+
+    state["last_checked"] = now_ny.isoformat(timespec="minutes")
+    save_state(state)
+
+
+if __name__ == "__main__":
+    main()
