@@ -1,10 +1,163 @@
 {
+ "details": {
+  "311": {
+   "65065029": {
+    "date": "2025-05-26 13:07",
+    "detail": "The Department of Sanitation investigated this complaint and issued a Notice of Violation.",
+    "label": "311 #65065029",
+    "status": "Closed",
+    "what": "Illegal Dumping / Removal Request / DSNY"
+   },
+   "65795182": {
+    "date": "2025-08-08 11:04",
+    "detail": "The Department of Environmental Protection inspected your complaint and cleaned the catch basin or inlet. If the condition returns, please call 311 (or 212-639-9675 if calling from a non-New York City area code) to submit a new complaint.",
+    "label": "311 #65795182",
+    "status": "Closed",
+    "what": "Sewer / Catch Basin Clogged/Flooding (Use Comments) (SC) / DEP"
+   },
+   "69102688": {
+    "date": "2026-05-23 11:18",
+    "detail": "The Department of Environmental Protection determined that this complaint is a duplicate of a previously filed complaint. The original complaint is being addressed.",
+    "label": "311 #69102688",
+    "status": "Closed",
+    "what": "Water System / Hydrant Running (WC3) / DEP"
+   },
+   "69269639": {
+    "date": "2026-06-07 02:50",
+    "detail": "The New York City Police Department responded to the complaint and their investigation determined that no criminal violation existed. The condition was corrected without the need to issue a summons or effect an arrest. If the problem persists, please contact 311 to create another complaint. If possible, provide contact information so responding officers may reach out to you for more details. If necessary, your complaint may be referred to your local precinct's special operations units (Quality of Life, etc.). Thank you for your attention to this matter. We count on New Yorkers like yourself to maintain a safe City, so please let us know if you see other conditions that require our attention.",
+    "label": "311 #69269639",
+    "status": "Closed",
+    "what": "Noise - Commercial / Loud Music/Party / NYPD"
+   },
+   "69414211": {
+    "date": "2026-06-19 11:27",
+    "detail": "The Department of Buildings attempted to investigate this complaint but could not gain access to the location. Please schedule an appointment for a follow up inspection by contacting the appropriate unit at Department of Buildings. You can find contact information at https://www1.nyc.gov/site/buildings/dob/contact-us.page",
+    "label": "311 #69414211",
+    "status": "Assigned",
+    "what": "Building/Use / Illegal Conversion Of Residential Building/Space / DOB"
+   },
+   "69651191": {
+    "date": "2026-07-08 16:16",
+    "detail": "The Department of Buildings has made a second attempt to conduct an inspection of this premises and was denied access. No further attempts will be made.",
+    "label": "311 #69651191",
+    "status": "Closed",
+    "what": "Plumbing / Gas Hook-Up/Piping - Illegal Or Defective / DOB"
+   },
+   "69730512": {
+    "date": "2026-07-15 10:46",
+    "detail": "The Department of Buildings attempted to investigate this complaint twice but could not gain access to the location. If the problem still exists, please call 311 and file a new complaint with additional access information. If you are outside of New York City, please call (212) NEW-YORK (212-639-9675).",
+    "label": "311 #69730512",
+    "status": "Closed",
+    "what": "Elevator / Elevator - Single Device On Property/No Alternate Service / DOB"
+   },
+   "69938377": {
+    "date": "2026-08-03 09:01",
+    "detail": "The New York City Police Department responded to the complaint and observed no criminal violation upon their arrival. If the problem persists, please contact 311 to create another complaint. If possible, provide contact information so responding officers may reach out to you for more details. We count on New Yorkers like yourself to maintain a safe City, so please let us know if you see other conditions that require our attention.",
+    "label": "311 #69938377",
+    "status": "Closed",
+    "what": "Illegal Parking / Posted Parking Sign Violation / NYPD"
+   },
+   "69972559": {
+    "date": "2026-08-06 15:21",
+    "detail": "The Department of Buildings has made a second attempt to conduct an inspection of this premises and was denied access. No further attempts will be made.",
+    "label": "311 #69972559",
+    "status": "Closed",
+    "what": "Plumbing / Gas Hook-Up/Piping - Illegal Or Defective / DOB"
+   },
+   "70187042": {
+    "date": "2026-08-25 11:30",
+    "detail": "The Department of Sanitation cleaned the location.",
+    "label": "311 #70187042",
+    "status": "Closed",
+    "what": "Illegal Dumping / Removal Request / DSNY"
+   },
+   "70538930": {
+    "date": "2026-09-25 22:25",
+    "detail": "The New York City Police Department responded to the complaint and with the information available observed no evidence of a criminal violation at that time. If the problem persists, please contact 311 to create another complaint. If possible, provide contact information so responding officers may reach out to you for more details. If necessary, your complaint may be referred to your local precinct's special operations units (Quality of Life, etc.). We count on New Yorkers like yourself to maintain a safe City, so please let us know if you see other conditions that require our attention.",
+    "label": "311 #70538930",
+    "status": "Closed",
+    "what": "Noise - Commercial / Loud Music/Party / NYPD"
+   },
+   "70592993": {
+    "date": "2026-09-30 11:26",
+    "detail": "The New York City Police Department responded to the complaint and their investigation determined that no criminal violation existed. The condition was corrected without the need to issue a summons or effect an arrest. If the problem persists, please contact 311 to create another complaint. If possible, provide contact information so responding officers may reach out to you for more details. If necessary, your complaint may be referred to your local precinct's special operations units (Quality of Life, etc.). Thank you for your attention to this matter. We count on New Yorkers like yourself to maintain a safe City, so please let us know if you see other conditions that require our attention.",
+    "label": "311 #70592993",
+    "status": "Closed",
+    "what": "Drinking / Underage - Licensed Est / NYPD"
+   }
+  },
+  "DOB records": {
+   "3062964": {
+    "date": "04/15/1998",
+    "detail": "disposition C2, on 06/22/1998, inspected 04/28/1998",
+    "label": "DOB #3062964",
+    "status": "CLOSED",
+    "what": "category 05"
+   },
+   "3383941": {
+    "date": "07/14/2011",
+    "detail": "disposition I2, on 10/14/2011, inspected 10/13/2011",
+    "label": "DOB #3383941",
+    "status": "CLOSED",
+    "what": "category 45"
+   },
+   "3468901": {
+    "date": "02/03/2014",
+    "detail": "disposition C2, on 12/31/2015, inspected 12/30/2015",
+    "label": "DOB #3468901",
+    "status": "CLOSED",
+    "what": "category 31"
+   },
+   "3487913": {
+    "date": "07/31/2014",
+    "detail": "disposition H1, on 08/01/2014, inspected 08/01/2014",
+    "label": "DOB #3487913",
+    "status": "CLOSED",
+    "what": "category 45"
+   },
+   "3512282": {
+    "date": "04/21/2015",
+    "detail": "disposition A8, on 04/22/2015, inspected 04/21/2015",
+    "label": "DOB #3512282",
+    "status": "CLOSED",
+    "what": "category 10"
+   },
+   "3A67576": {
+    "date": "06/19/2026",
+    "detail": "disposition C1, on 08/20/2026, inspected 08/19/2026",
+    "label": "DOB #3A67576",
+    "status": "ACTIVE",
+    "what": "category 45"
+   },
+   "3A70333": {
+    "date": "07/08/2026",
+    "detail": "disposition C4, on 07/10/2026, inspected 07/10/2026",
+    "label": "DOB #3A70333",
+    "status": "CLOSED",
+    "what": "category 65"
+   },
+   "3A71290": {
+    "date": "07/15/2026",
+    "detail": "disposition C2, on 09/29/2026, inspected 09/25/2026",
+    "label": "DOB #3A71290",
+    "status": "CLOSED",
+    "what": "category 6S"
+   },
+   "3A74795": {
+    "date": "08/06/2026",
+    "detail": "disposition C4, on 08/11/2026, inspected 08/11/2026",
+    "label": "DOB #3A74795",
+    "status": "CLOSED",
+    "what": "category 65"
+   }
+  }
+ },
  "failures": {
   "311": 0,
-  "DOB page": 1,
+  "DOB page": 2,
   "DOB records": 0
  },
- "last_checked": "2026-10-14T12:49-04:00",
+ "last_checked": "2026-10-14T13:11-04:00",
  "sources": {
   "311": {
    "65065029": "c69efca13318",
