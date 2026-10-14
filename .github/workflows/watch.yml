@@ -1,1 +1,32 @@
+name: 17 Saratoga complaint watch
 
+on:
+  schedule:
+    # Times are UTC: 11:47 and 23:47 UTC = 7:47am and 7:47pm New York (6:47 in winter)
+    - cron: "47 11,23 * * *"
+  workflow_dispatch: # adds a "Run workflow" button for manual checks
+
+permissions:
+  contents: write # lets the job save state.json back to the repo
+
+concurrency: complaint-watch
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check city records
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python3 watch.py
+
+      - name: Remember what was seen
+        run: |
+          git config user.name "complaint-watch"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          git commit -m "Check $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
+          git push
