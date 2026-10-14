@@ -201,7 +201,23 @@ def notify(title, body, priority="default", tags="house"):
 
 # ---------- main ----------
 
+def wrong_season_run():
+    """GitHub schedules run on UTC, so the workflow has a summer and a winter
+    schedule. Skip whichever one doesn't match New York's current clock."""
+    schedule = os.environ.get("CRON_SCHEDULE", "")
+    summer = datetime.now(timezone.utc).astimezone(NY).dst().total_seconds() > 0
+    return (schedule == SUMMER_CRON and not summer) or \
+           (schedule == WINTER_CRON and summer)
+
+
+SUMMER_CRON = "30 1,13 * * *"  # 9:30am/pm New York during daylight time
+WINTER_CRON = "30 2,14 * * *"  # 9:30am/pm New York during standard time
+
+
 def main():
+    if wrong_season_run():
+        print("Off-season schedule; skipping this run.")
+        return
     state = load_state()
     state.setdefault("sources", {})
     state.setdefault("failures", {})
@@ -253,14 +269,16 @@ def main():
                "Starting point recorded. You'll hear from me when anything "
                "new appears.\n\n" + "\n".join(baseline), tags="white_check_mark")
 
-    # Weekly reassurance on Monday mornings, so silence never means "broken".
+    # Daily reassurance after the morning check, so silence never means "broken".
     today = now_ny.date().isoformat()
-    if (now_ny.weekday() == 0 and now_ny.hour < 12 and not changes
-            and not baseline and state.get("last_heartbeat") != today):
+    if (now_ny.hour < 15 and not changes and not baseline
+            and state.get("last_heartbeat") != today):
+        counts = ", ".join(f"{name}: {len(items)}" for name, items
+                           in state.get("details", {}).items()
+                           if name != "DOB page")
         notify("17 Saratoga: all quiet",
-               "Still checking every 12 hours. Nothing new since last week's "
-               "note unless I told you otherwise.", priority="low",
-               tags="zzz")
+               f"No new or changed complaints. On record: {counts}.",
+               priority="low", tags="zzz")
         state["last_heartbeat"] = today
 
     state["last_checked"] = now_ny.isoformat(timespec="minutes")
