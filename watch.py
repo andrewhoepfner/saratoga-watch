@@ -134,6 +134,39 @@ def describe(item):
     return " - ".join(parts)
 
 
+def write_report(state, now_ny):
+    """Write complaints.md: a readable list of everything the watcher sees."""
+    titles = {"311": "311 complaints at 17 Saratoga (since Jan 2025)",
+              "DOB records": "DOB complaints (all years)"}
+    lines = ["# 17 Saratoga Ave: complaint records", "",
+             f"Last checked {now_ny.strftime('%b %d, %Y %I:%M %p')} New York time. "
+             "Newest first.", ""]
+    for name, title in titles.items():
+        items = state.get("details", {}).get(name)
+        lines += [f"## {title}", ""]
+        if items is None:
+            lines += ["_Not reachable yet._", ""]
+            continue
+        lines += [f"{len(items)} on record.", "",
+                  "| Number | Date | What | Status | Outcome |",
+                  "|---|---|---|---|---|"]
+        for item in sorted(items.values(), key=lambda i: sort_date(i["date"]),
+                           reverse=True):
+            cells = [item["label"].split("#")[-1], item["date"], item["what"],
+                     item["status"], item["detail"]]
+            lines.append("| " + " | ".join(
+                c.replace("|", "/").replace("\n", " ") for c in cells) + " |")
+        lines.append("")
+    with open("complaints.md", "w") as f:
+        f.write("\n".join(lines))
+
+
+def sort_date(d):
+    # 311 dates are "YYYY-MM-DD HH:MM"; DOB dates are "MM/DD/YYYY".
+    m = re.match(r"(\d\d)/(\d\d)/(\d{4})", d or "")
+    return f"{m.group(3)}-{m.group(1)}-{m.group(2)}" if m else (d or "")
+
+
 def load_state():
     try:
         with open(STATE_FILE) as f:
@@ -191,6 +224,7 @@ def main():
         if state["failures"].get(name, 0) >= FAILURE_ALERT_AFTER:
             problems.append(f"{name} is reachable again.")
         state["failures"][name] = 0
+        state.setdefault("details", {})[name] = items
 
         seen = state["sources"].get(name)
         if seen is None:  # first time checking this source: just record it
@@ -231,6 +265,7 @@ def main():
 
     state["last_checked"] = now_ny.isoformat(timespec="minutes")
     save_state(state)
+    write_report(state, now_ny)
 
 
 if __name__ == "__main__":
