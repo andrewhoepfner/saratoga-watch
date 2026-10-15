@@ -201,23 +201,33 @@ def notify(title, body, priority="default", tags="house"):
 
 # ---------- main ----------
 
-def wrong_season_run():
-    """GitHub schedules run on UTC, so the workflow has a summer and a winter
-    schedule. Skip whichever one doesn't match New York's current clock."""
+# GitHub schedules run on UTC, so the workflow lists a summer and a winter
+# version of each check. Each line tells us exactly which check this is,
+# even if GitHub starts it hours late.
+SCHEDULES = {
+    "30 13 * * *": ("morning", True),   # 9:30am New York, daylight time
+    "30 1 * * *":  ("evening", True),   # 9:30pm New York, daylight time
+    "30 14 * * *": ("morning", False),  # 9:30am New York, standard time
+    "30 2 * * *":  ("evening", False),  # 9:30pm New York, standard time
+}
+
+
+def which_check():
+    """Returns 'morning', 'evening', 'manual', or None (wrong season: skip)."""
     schedule = os.environ.get("CRON_SCHEDULE", "")
+    if schedule not in SCHEDULES:
+        return "manual"
+    slot, for_summer = SCHEDULES[schedule]
     summer = datetime.now(timezone.utc).astimezone(NY).dst().total_seconds() > 0
-    return (schedule == SUMMER_CRON and not summer) or \
-           (schedule == WINTER_CRON and summer)
-
-
-SUMMER_CRON = "30 1,13 * * *"  # 9:30am/pm New York during daylight time
-WINTER_CRON = "30 2,14 * * *"  # 9:30am/pm New York during standard time
+    return slot if for_summer == summer else None
 
 
 def main():
-    if wrong_season_run():
+    check = which_check()
+    if check is None:
         print("Off-season schedule; skipping this run.")
         return
+    print(f"Running the {check} check.")
     state = load_state()
     state.setdefault("sources", {})
     state.setdefault("failures", {})
@@ -271,7 +281,7 @@ def main():
 
     # Daily reassurance after the morning check, so silence never means "broken".
     today = now_ny.date().isoformat()
-    if (now_ny.hour < 15 and not changes and not baseline
+    if (check == "morning" and not changes and not baseline
             and state.get("last_heartbeat") != today):
         counts = ", ".join(f"{name}: {len(items)}" for name, items
                            in state.get("details", {}).items()
