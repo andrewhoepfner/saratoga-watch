@@ -17,7 +17,7 @@ import os
 import re
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 BIN = "3039904"
@@ -201,9 +201,12 @@ def notify(title, body, priority="default", tags="house"):
 
 # ---------- main ----------
 
-# GitHub schedules run on UTC, so the workflow lists a summer and a winter
-# version of each check. Each line tells us exactly which check this is,
-# even if GitHub starts it hours late.
+# Two ways a check gets started:
+#  1. The outside timer (cron-job.org) at exactly 9:30am/pm, which passes
+#     CHECK=morning or CHECK=evening.
+#  2. GitHub's own schedule, kept as a backup. It's often hours late, so it
+#     stands down if the timer already did that check.
+# GitHub's schedule runs on UTC, so it lists summer and winter versions.
 SCHEDULES = {
     "30 13 * * *": ("morning", True),   # 9:30am New York, daylight time
     "30 1 * * *":  ("evening", True),   # 9:30pm New York, daylight time
@@ -213,25 +216,47 @@ SCHEDULES = {
 
 
 def which_check():
-    """Returns 'morning', 'evening', 'manual', or None (wrong season: skip)."""
+    """Returns ('morning'|'evening'|'manual', from_backup) or None to skip."""
+    requested = os.environ.get("CHECK", "").strip().lower()
+    if requested in ("morning", "evening", "manual"):
+        return requested, False
     schedule = os.environ.get("CRON_SCHEDULE", "")
     if schedule not in SCHEDULES:
-        return "manual"
+        return "manual", False
     slot, for_summer = SCHEDULES[schedule]
     summer = datetime.now(timezone.utc).astimezone(NY).dst().total_seconds() > 0
-    return slot if for_summer == summer else None
+    return (slot, True) if for_summer == summer else None
+
+
+def slot_id(check, now_ny):
+    """Which day's morning/evening check this is. A late evening check that
+    runs after midnight still belongs to the previous evening."""
+    day = now_ny.date()
+    if check == "evening" and now_ny.hour < 12:
+        day -= timedelta(days=1)
+    return f"{day.isoformat()} {check}"
 
 
 def main():
-    check = which_check()
-    if check is None:
-        print("Off-season schedule; skipping this run.")
+    which = which_check()
+    if which is None:
+        print("Off-season backup schedule; skipping this run.")
         return
-    print(f"Running the {check} check.")
+    check, from_backup = which
     state = load_state()
+    now_ny = datetime.now(timezone.utc).astimezone(NY)
+    done = state.setdefault("slots_done", [])
+    if check in ("morning", "evening"):
+        slot = slot_id(check, now_ny)
+        if from_backup and slot in done:
+            print(f"The timer already ran the {slot} check; backup standing down.")
+            return
+        if slot not in done:
+            done.append(slot)
+        del done[:-20]  # keep the list short
+    print(f"Running the {check} check" + (" (backup)." if from_backup else "."))
     state.setdefault("sources", {})
     state.setdefault("failures", {})
-    now_ny = datetime.now(timezone.utc).astimezone(NY)
 
     changes, problems, baseline = [], [], []
 
