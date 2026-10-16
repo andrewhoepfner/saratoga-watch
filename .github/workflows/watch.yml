@@ -2,13 +2,20 @@ name: 17 Saratoga complaint watch
 
 on:
   schedule:
-    # Times are UTC. Summer and winter versions of each check; watch.py skips
-    # whichever doesn't match, so checks land at 9:30am and 9:30pm New York.
+    # BACKUP ONLY. The main trigger is the cron-job.org timer at 9:30am/pm.
+    # GitHub often runs these hours late; watch.py skips them if the timer
+    # already ran that check. Times are UTC, with summer and winter versions.
     - cron: "30 13 * * *" # morning, daylight time
     - cron: "30 1 * * *"  # evening, daylight time
     - cron: "30 14 * * *" # morning, standard time
     - cron: "30 2 * * *"  # evening, standard time
-  workflow_dispatch: # adds a "Run workflow" button for manual checks
+  workflow_dispatch: # the "Run workflow" button, and what the timer calls
+    inputs:
+      check:
+        description: "Which check (morning, evening, or manual)"
+        default: manual
+        type: choice
+        options: [manual, morning, evening]
 
 permissions:
   contents: write # lets the job save state.json back to the repo
@@ -28,6 +35,7 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           CRON_SCHEDULE: ${{ github.event.schedule }}
+          CHECK: ${{ inputs.check }}
         run: python3 watch.py
 
       - name: Remember what was seen
