@@ -154,11 +154,14 @@
  },
  "failures": {
   "311": 0,
-  "DOB page": 5,
+  "DOB page": 6,
   "DOB records": 0
  },
- "last_checked": "2026-10-16T02:08-04:00",
- "last_heartbeat": "2026-10-15",
+ "last_checked": "2026-10-16T11:02-04:00",
+ "last_heartbeat": "2026-10-16",
+ "slots_done": [
+  "2026-10-16 morning"
+ ],
  "sources": {
   "311": {
    "65065029": "c69efca13318",
