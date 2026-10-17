@@ -1,6 +1,6 @@
 # 17 Saratoga Ave: complaint records
 
-Last checked Oct 17, 2026 01:53 AM New York time. Newest first.
+Last checked Oct 17, 2026 09:30 AM New York time. Newest first.
 
 ## 311 complaints at 17 Saratoga (since Jan 2025)
 
