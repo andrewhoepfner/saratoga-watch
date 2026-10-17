@@ -154,10 +154,10 @@
  },
  "failures": {
   "311": 0,
-  "DOB page": 8,
+  "DOB page": 9,
   "DOB records": 0
  },
- "last_checked": "2026-10-16T11:07-04:00",
+ "last_checked": "2026-10-16T21:30-04:00",
  "last_heartbeat": "2026-10-16",
  "slots_done": [
   "2026-10-16 morning"
