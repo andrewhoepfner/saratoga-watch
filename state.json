@@ -153,11 +153,11 @@
   }
  },
  "failures": {
-  "311": 1,
-  "DOB page": 11,
+  "311": 0,
+  "DOB page": 12,
   "DOB records": 0
  },
- "last_checked": "2026-10-17T09:30-04:00",
+ "last_checked": "2026-10-17T21:30-04:00",
  "last_heartbeat": "2026-10-17",
  "slots_done": [
   "2026-10-16 morning",
