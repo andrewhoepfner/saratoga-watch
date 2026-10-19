@@ -320,17 +320,18 @@ def main():
                "Starting point recorded. You'll hear from me when anything "
                "new appears.\n\n" + "\n".join(baseline), tags="white_check_mark")
 
-    # Daily reassurance after the morning check, so silence never means "broken".
-    today = now_ny.date().isoformat()
-    if (check == "morning" and not changes and not baseline
-            and state.get("last_heartbeat") != today):
-        counts = ", ".join(f"{name}: {len(items)}" for name, items
-                           in state.get("details", {}).items()
-                           if name != "DOB page")
-        notify("17 Saratoga: all quiet",
-               f"No new or changed complaints. On record: {counts}.",
-               priority="low", tags="zzz")
-        state["last_heartbeat"] = today
+    # Reassurance after each morning and evening check, so silence never
+    # means "broken". Sent once per check, even if a backup run repeats it.
+    if check in ("morning", "evening") and not changes and not baseline:
+        slot = slot_id(check, now_ny)
+        if state.get("last_heartbeat") != slot:
+            counts = ", ".join(f"{name}: {len(items)}" for name, items
+                               in state.get("details", {}).items()
+                               if name != "DOB page")
+            notify(f"17 Saratoga: all quiet ({check})",
+                   f"No new or changed complaints. On record: {counts}.",
+                   priority="low", tags="zzz")
+            state["last_heartbeat"] = slot
 
     state["last_checked"] = now_ny.isoformat(timespec="minutes")
     save_state(state)
