@@ -101,8 +101,9 @@ def fetch_dob_page():
     text = re.sub(r"<[^>]+>", " ", html).replace("&nbsp;", " ")
     if "omplaint" not in text:
         raise RuntimeError("page did not look like the DOB complaints list")
-    # Brooklyn DOB complaint numbers are 7 digits starting with 3.
-    numbers = set(re.findall(r"\b3\d{6}\b", text)) - {BIN}
+    # Brooklyn DOB complaint numbers start with 3: older ones are 7 digits
+    # (3512282), newer ones have a letter (3A74795).
+    numbers = set(re.findall(r"\b3(?:[A-Z]\d{5}|\d{6})\b", text)) - {BIN}
     return {n: {"label": f"DOB #{n}", "date": "",
                 "what": "newly listed on the DOB BIS complaints page",
                 "status": "", "detail": ""} for n in numbers}
@@ -283,6 +284,21 @@ def main():
             baseline.append(f"{name}: {len(items)} complaint(s) on record")
             continue
 
+        # Records that vanished from the city's data (usually a glitch while
+        # the city reloads it). Tell once when it starts and once when fixed.
+        missing_before = set(state.setdefault("missing", {}).get(name, []))
+        missing_now = {k for k in seen if k not in items}
+        if missing_now and missing_now != missing_before:
+            labels = ", ".join(sorted(missing_now))
+            problems.append(
+                f"{name}: {len(missing_now)} complaint(s) we saw before are "
+                f"missing from the city's data now ({labels}). Usually the city "
+                "is mid-update and they reappear; worth a glance at BIS.")
+        elif missing_before and not missing_now:
+            problems.append(f"{name}: all previously seen complaints are back "
+                            "in the city's data.")
+        state["missing"][name] = sorted(missing_now)
+
         for key, item in sorted(items.items(), key=lambda kv: kv[1]["date"],
                                 reverse=True):
             fp = fingerprint(item)
@@ -297,7 +313,7 @@ def main():
         notify(f"17 Saratoga: {len(changes)} new or changed complaint record(s)",
                "\n\n".join(changes), priority="high", tags="rotating_light")
     if problems:
-        notify("17 Saratoga watcher: connection note", "\n".join(problems),
+        notify("17 Saratoga watcher: data note", "\n\n".join(problems),
                tags="warning")
     if baseline:
         notify("17 Saratoga watcher is running",
