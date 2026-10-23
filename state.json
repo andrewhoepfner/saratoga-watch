@@ -154,11 +154,11 @@
  },
  "failures": {
   "311": 0,
-  "DOB page": 27,
+  "DOB page": 28,
   "DOB records": 0
  },
- "last_checked": "2026-10-22T21:30-04:00",
- "last_heartbeat": "2026-10-22 evening",
+ "last_checked": "2026-10-23T09:30-04:00",
+ "last_heartbeat": "2026-10-23 morning",
  "missing": {
   "311": [],
   "DOB records": []
@@ -177,7 +177,8 @@
   "2026-10-21 morning",
   "2026-10-21 evening",
   "2026-10-22 morning",
-  "2026-10-22 evening"
+  "2026-10-22 evening",
+  "2026-10-23 morning"
  ],
  "sources": {
   "311": {
