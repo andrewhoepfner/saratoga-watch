@@ -1,6 +1,6 @@
 # 17 Saratoga Ave: complaint records
 
-Last checked Oct 26, 2026 09:30 AM New York time. Newest first.
+Last checked Oct 26, 2026 09:30 PM New York time. Newest first.
 
 ## 311 complaints at 17 Saratoga (since Jan 2025)
 
@@ -23,10 +23,14 @@ Last checked Oct 26, 2026 09:30 AM New York time. Newest first.
 
 ## DOB complaints (all years)
 
-5 on record.
+9 on record.
 
 | Number | Date | What | Status | Outcome |
 |---|---|---|---|---|
+| 3A74795 | 08/06/2026 | category 65 | CLOSED | disposition C4, on 08/11/2026, inspected 08/11/2026 |
+| 3A71290 | 07/15/2026 | category 6S | CLOSED | disposition C2, on 09/29/2026, inspected 09/25/2026 |
+| 3A70333 | 07/08/2026 | category 65 | CLOSED | disposition C4, on 07/10/2026, inspected 07/10/2026 |
+| 3A67576 | 06/19/2026 | category 45 | ACTIVE | disposition C1, on 08/20/2026, inspected 08/19/2026 |
 | 3512282 | 04/21/2015 | category 10 | CLOSED | disposition A8, on 04/22/2015, inspected 04/21/2015 |
 | 3487913 | 07/31/2014 | category 45 | CLOSED | disposition H1, on 08/01/2014, inspected 08/01/2014 |
 | 3468901 | 02/03/2014 | category 31 | CLOSED | disposition C2, on 12/31/2015, inspected 12/30/2015 |
