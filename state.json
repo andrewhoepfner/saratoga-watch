@@ -86,6 +86,71 @@
     "what": "Drinking / Underage - Licensed Est / NYPD"
    }
   },
+  "DOB page": {
+   "3062964": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3062964",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   },
+   "3383941": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3383941",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   },
+   "3468901": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3468901",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   },
+   "3487913": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3487913",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   },
+   "3512282": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3512282",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   },
+   "3A67576": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3A67576",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   },
+   "3A70333": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3A70333",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   },
+   "3A71290": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3A71290",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   },
+   "3A74795": {
+    "date": "",
+    "detail": "",
+    "label": "DOB #3A74795",
+    "status": "",
+    "what": "newly listed on the DOB BIS complaints page"
+   }
+  },
   "DOB records": {
    "3062964": {
     "date": "04/15/1998",
@@ -154,17 +219,16 @@
  },
  "failures": {
   "311": 0,
-  "DOB page": 56,
+  "DOB page": 0,
   "DOB records": 0
  },
- "last_checked": "2026-11-06T09:30-05:00",
+ "last_checked": "2026-11-06T21:30-05:00",
  "last_heartbeat": "2026-11-06 morning",
  "missing": {
   "311": [],
   "DOB records": []
  },
  "slots_done": [
-  "2026-10-27 evening",
   "2026-10-28 morning",
   "2026-10-28 evening",
   "2026-10-29 morning",
@@ -183,7 +247,8 @@
   "2026-11-04 evening",
   "2026-11-05 morning",
   "2026-11-05 evening",
-  "2026-11-06 morning"
+  "2026-11-06 morning",
+  "2026-11-06 evening"
  ],
  "sources": {
   "311": {
@@ -199,6 +264,17 @@
    "70187042": "d6eca9d0e2a0",
    "70538930": "2cceff881779",
    "70592993": "b7b5204297b5"
+  },
+  "DOB page": {
+   "3062964": "90bae8756830",
+   "3383941": "90bae8756830",
+   "3468901": "90bae8756830",
+   "3487913": "90bae8756830",
+   "3512282": "90bae8756830",
+   "3A67576": "90bae8756830",
+   "3A70333": "90bae8756830",
+   "3A71290": "90bae8756830",
+   "3A74795": "90bae8756830"
   },
   "DOB records": {
    "3062964": "ec0b6cf398a4",
