@@ -159,37 +159,77 @@
     "status": "CLOSED",
     "what": "category 05"
    },
+   "3383941": {
+    "date": "07/14/2011",
+    "detail": "disposition I2, on 10/14/2011, inspected 10/13/2011",
+    "label": "DOB #3383941",
+    "status": "CLOSED",
+    "what": "category 45"
+   },
    "3468901": {
     "date": "02/03/2014",
     "detail": "disposition C2, on 12/31/2015, inspected 12/30/2015",
     "label": "DOB #3468901",
     "status": "CLOSED",
     "what": "category 31"
+   },
+   "3487913": {
+    "date": "07/31/2014",
+    "detail": "disposition H1, on 08/01/2014, inspected 08/01/2014",
+    "label": "DOB #3487913",
+    "status": "CLOSED",
+    "what": "category 45"
+   },
+   "3512282": {
+    "date": "04/21/2015",
+    "detail": "disposition A8, on 04/22/2015, inspected 04/21/2015",
+    "label": "DOB #3512282",
+    "status": "CLOSED",
+    "what": "category 10"
+   },
+   "3A67576": {
+    "date": "06/19/2026",
+    "detail": "disposition C1, on 08/20/2026, inspected 08/19/2026",
+    "label": "DOB #3A67576",
+    "status": "ACTIVE",
+    "what": "category 45"
+   },
+   "3A70333": {
+    "date": "07/08/2026",
+    "detail": "disposition C4, on 07/10/2026, inspected 07/10/2026",
+    "label": "DOB #3A70333",
+    "status": "CLOSED",
+    "what": "category 65"
+   },
+   "3A71290": {
+    "date": "07/15/2026",
+    "detail": "disposition C2, on 09/29/2026, inspected 09/25/2026",
+    "label": "DOB #3A71290",
+    "status": "CLOSED",
+    "what": "category 6S"
+   },
+   "3A74795": {
+    "date": "08/06/2026",
+    "detail": "disposition C4, on 08/11/2026, inspected 08/11/2026",
+    "label": "DOB #3A74795",
+    "status": "CLOSED",
+    "what": "category 65"
    }
   }
  },
  "failures": {
-  "311": 3,
+  "311": 0,
   "DOB page": 0,
-  "DOB records": 1
+  "DOB records": 0
  },
- "last_checked": "2026-11-09T09:30-05:00",
- "last_heartbeat": "2026-11-09 morning",
+ "last_checked": "2026-11-09T21:30-05:00",
+ "last_heartbeat": "2026-11-09 evening",
  "missing": {
   "311": [],
   "DOB page": [],
-  "DOB records": [
-   "3383941",
-   "3487913",
-   "3512282",
-   "3A67576",
-   "3A70333",
-   "3A71290",
-   "3A74795"
-  ]
+  "DOB records": []
  },
  "slots_done": [
-  "2026-10-30 evening",
   "2026-10-31 morning",
   "2026-10-31 evening",
   "2026-11-01 morning",
@@ -208,7 +248,8 @@
   "2026-11-07 evening",
   "2026-11-08 morning",
   "2026-11-08 evening",
-  "2026-11-09 morning"
+  "2026-11-09 morning",
+  "2026-11-09 evening"
  ],
  "sources": {
   "311": {
