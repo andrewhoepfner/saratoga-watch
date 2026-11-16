@@ -84,6 +84,13 @@
     "label": "311 #70592993",
     "status": "Closed",
     "what": "Drinking / Underage - Licensed Est / NYPD"
+   },
+   "71121837": {
+    "date": "2026-11-14 09:25",
+    "detail": "The following complaint conditions are still open. HPD has already attempted to notify the property owner that the condition exists; the tenant should provide access for the owner to make the repair.  HPD may attempt to contact the tenant by phone to verify the correction of the condition or an HPD Inspector may attempt to conduct an inspection.",
+    "label": "311 #71121837",
+    "status": "Open",
+    "what": "HEAT/HOT WATER / APARTMENT ONLY / HPD"
    }
   },
   "DOB page": {
@@ -173,7 +180,7 @@
   "DOB page": 0,
   "DOB records": 0
  },
- "last_checked": "2026-11-15T21:30-05:00",
+ "last_checked": "2026-11-16T09:30-05:00",
  "last_heartbeat": "2026-11-15 evening",
  "missing": {
   "311": [],
@@ -189,7 +196,6 @@
   ]
  },
  "slots_done": [
-  "2026-11-06 morning",
   "2026-11-06 evening",
   "2026-11-07 morning",
   "2026-11-07 evening",
@@ -208,7 +214,8 @@
   "2026-11-14 morning",
   "2026-11-14 evening",
   "2026-11-15 morning",
-  "2026-11-15 evening"
+  "2026-11-15 evening",
+  "2026-11-16 morning"
  ],
  "sources": {
   "311": {
@@ -223,7 +230,8 @@
    "69972559": "497d05f9dc1f",
    "70187042": "d6eca9d0e2a0",
    "70538930": "2cceff881779",
-   "70592993": "b7b5204297b5"
+   "70592993": "b7b5204297b5",
+   "71121837": "07a7704d2d08"
   },
   "DOB page": {
    "3062964": "90bae8756830",
