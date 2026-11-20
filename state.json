@@ -229,15 +229,14 @@
   "DOB page": 0,
   "DOB records": 0
  },
- "last_checked": "2026-11-19T09:30-05:00",
- "last_heartbeat": "2026-11-19 morning",
+ "last_checked": "2026-11-19T21:30-05:00",
+ "last_heartbeat": "2026-11-19 evening",
  "missing": {
   "311": [],
   "DOB page": [],
   "DOB records": []
  },
  "slots_done": [
-  "2026-11-09 evening",
   "2026-11-10 morning",
   "2026-11-10 evening",
   "2026-11-11 morning",
@@ -256,7 +255,8 @@
   "2026-11-17 evening",
   "2026-11-18 morning",
   "2026-11-18 evening",
-  "2026-11-19 morning"
+  "2026-11-19 morning",
+  "2026-11-19 evening"
  ],
  "sources": {
   "311": {
