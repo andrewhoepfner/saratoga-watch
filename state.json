@@ -226,18 +226,17 @@
  },
  "failures": {
   "311": 0,
-  "DOB page": 0,
+  "DOB page": 1,
   "DOB records": 0
  },
- "last_checked": "2026-11-20T09:30-05:00",
- "last_heartbeat": "2026-11-20 morning",
+ "last_checked": "2026-11-20T21:30-05:00",
+ "last_heartbeat": "2026-11-20 evening",
  "missing": {
   "311": [],
   "DOB page": [],
   "DOB records": []
  },
  "slots_done": [
-  "2026-11-10 evening",
   "2026-11-11 morning",
   "2026-11-11 evening",
   "2026-11-12 morning",
@@ -256,7 +255,8 @@
   "2026-11-18 evening",
   "2026-11-19 morning",
   "2026-11-19 evening",
-  "2026-11-20 morning"
+  "2026-11-20 morning",
+  "2026-11-20 evening"
  ],
  "sources": {
   "311": {
