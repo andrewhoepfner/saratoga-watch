@@ -1,6 +1,6 @@
 # 17 Saratoga Ave: complaint records
 
-Last checked Nov 20, 2026 09:30 PM New York time. Newest first.
+Last checked Nov 21, 2026 09:30 AM New York time. Newest first.
 
 ## 311 complaints at 17 Saratoga (since Jan 2025)
 
@@ -8,7 +8,7 @@ Last checked Nov 20, 2026 09:30 PM New York time. Newest first.
 
 | Number | Date | What | Status | Outcome |
 |---|---|---|---|---|
-| 71121837 | 2026-11-14 09:25 | HEAT/HOT WATER / APARTMENT ONLY / HPD | Open | The following complaint conditions are still open. HPD has already attempted to notify the property owner that the condition exists; the tenant should provide access for the owner to make the repair.  HPD may attempt to contact the tenant by phone to verify the correction of the condition or an HPD Inspector may attempt to conduct an inspection. |
+| 71121837 | 2026-11-14 09:25 | HEAT/HOT WATER / APARTMENT ONLY / HPD | Closed | The Department of Housing Preservation and Development was not able to gain access to your apartment or others in the building to inspect for a lack of heat or hot water. The complaint has been closed. If the condition still exists, please file a new complaint. |
 | 70592993 | 2026-09-30 11:26 | Drinking / Underage - Licensed Est / NYPD | Closed | The New York City Police Department responded to the complaint and their investigation determined that no criminal violation existed. The condition was corrected without the need to issue a summons or effect an arrest. If the problem persists, please contact 311 to create another complaint. If possible, provide contact information so responding officers may reach out to you for more details. If necessary, your complaint may be referred to your local precinct's special operations units (Quality of Life, etc.). Thank you for your attention to this matter. We count on New Yorkers like yourself to maintain a safe City, so please let us know if you see other conditions that require our attention. |
 | 70538930 | 2026-09-25 22:25 | Noise - Commercial / Loud Music/Party / NYPD | Closed | The New York City Police Department responded to the complaint and with the information available observed no evidence of a criminal violation at that time. If the problem persists, please contact 311 to create another complaint. If possible, provide contact information so responding officers may reach out to you for more details. If necessary, your complaint may be referred to your local precinct's special operations units (Quality of Life, etc.). We count on New Yorkers like yourself to maintain a safe City, so please let us know if you see other conditions that require our attention. |
 | 70187042 | 2026-08-25 11:30 | Illegal Dumping / Removal Request / DSNY | Closed | The Department of Sanitation cleaned the location. |

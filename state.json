@@ -87,9 +87,9 @@
    },
    "71121837": {
     "date": "2026-11-14 09:25",
-    "detail": "The following complaint conditions are still open. HPD has already attempted to notify the property owner that the condition exists; the tenant should provide access for the owner to make the repair.  HPD may attempt to contact the tenant by phone to verify the correction of the condition or an HPD Inspector may attempt to conduct an inspection.",
+    "detail": "The Department of Housing Preservation and Development was not able to gain access to your apartment or others in the building to inspect for a lack of heat or hot water. The complaint has been closed. If the condition still exists, please file a new complaint.",
     "label": "311 #71121837",
-    "status": "Open",
+    "status": "Closed",
     "what": "HEAT/HOT WATER / APARTMENT ONLY / HPD"
    }
   },
@@ -226,10 +226,10 @@
  },
  "failures": {
   "311": 0,
-  "DOB page": 1,
+  "DOB page": 0,
   "DOB records": 0
  },
- "last_checked": "2026-11-20T21:30-05:00",
+ "last_checked": "2026-11-21T09:30-05:00",
  "last_heartbeat": "2026-11-20 evening",
  "missing": {
   "311": [],
@@ -237,7 +237,6 @@
   "DOB records": []
  },
  "slots_done": [
-  "2026-11-11 morning",
   "2026-11-11 evening",
   "2026-11-12 morning",
   "2026-11-12 evening",
@@ -256,7 +255,8 @@
   "2026-11-19 morning",
   "2026-11-19 evening",
   "2026-11-20 morning",
-  "2026-11-20 evening"
+  "2026-11-20 evening",
+  "2026-11-21 morning"
  ],
  "sources": {
   "311": {
@@ -272,7 +272,7 @@
    "70187042": "d6eca9d0e2a0",
    "70538930": "2cceff881779",
    "70592993": "b7b5204297b5",
-   "71121837": "07a7704d2d08"
+   "71121837": "f26fe89d478a"
   },
   "DOB page": {
    "3062964": "90bae8756830",
